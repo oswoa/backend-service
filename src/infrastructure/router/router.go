@@ -1,7 +1,7 @@
 package router
 
 import (
-	proto "github.com/oswoa/backend-service/grpc/proto"
+	proto "github.com/oswoa/backend-service/infrastructure/grpc/proto"
 )
 
 // バックエンドで扱うAPIを埋め込んだ構造体

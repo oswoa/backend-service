@@ -7,7 +7,7 @@ import (
 	"os/signal"
 
 	"github.com/oswoa/backend-service/config"
-	proto "github.com/oswoa/backend-service/grpc/proto"
+	proto "github.com/oswoa/backend-service/infrastructure/grpc/proto"
 	"github.com/oswoa/backend-service/infrastructure/router"
 	"github.com/oswoa/backend-service/util"
 )
