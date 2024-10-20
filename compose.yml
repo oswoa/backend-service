@@ -1,6 +1,8 @@
 services:
     backend:
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile-backend
         container_name: backend
         environment:
             - PORT=50001
@@ -8,6 +10,19 @@ services:
             - user-management
         ports:
             - 50001:50001
+    db:
+        build:
+            context: .
+            dockerfile: Dockerfile-mysql
+        container_name: user-management-db
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        networks:
+            - user-management
+        volumes:
+            - ./db:/docker-entrypoint-initdb.d
+        ports:
+            - 3306:3306
 networks:
     user-management:
         name: user-management
