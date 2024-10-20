@@ -7,6 +7,7 @@ import (
 	"os/signal"
 
 	"github.com/oswoa/backend-service/config"
+	server "github.com/oswoa/backend-service/infrastructure"
 	proto "github.com/oswoa/backend-service/infrastructure/grpc/proto"
 	"github.com/oswoa/backend-service/infrastructure/router"
 	"github.com/oswoa/backend-service/util"
@@ -21,7 +22,7 @@ func main() {
 	}
 
 	// gRPCサーバーを指定したポートで稼働させる
-	server, listener := router.NewGrpcServer(port)
+	server, listener := server.NewGrpcServer(port)
 	go func() {
 		log.Printf("gRPCサーバを起動します port: %s", port)
 		server.Serve(listener)
