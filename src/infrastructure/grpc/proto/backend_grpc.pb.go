@@ -19,14 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BackendService_Hello_FullMethodName = "/BackendService/Hello"
+	BackendService_Hello_FullMethodName    = "/BackendService/Hello"
+	BackendService_UserList_FullMethodName = "/BackendService/UserList"
 )
 
 // BackendServiceClient is the client API for BackendService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BackendServiceClient interface {
+	// サンプル用API
 	Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
+	// ユーザ一覧照会API
+	UserList(ctx context.Context, in *UserListRequest, opts ...grpc.CallOption) (*UserListResponse, error)
 }
 
 type backendServiceClient struct {
@@ -47,11 +51,24 @@ func (c *backendServiceClient) Hello(ctx context.Context, in *HelloRequest, opts
 	return out, nil
 }
 
+func (c *backendServiceClient) UserList(ctx context.Context, in *UserListRequest, opts ...grpc.CallOption) (*UserListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserListResponse)
+	err := c.cc.Invoke(ctx, BackendService_UserList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BackendServiceServer is the server API for BackendService service.
 // All implementations must embed UnimplementedBackendServiceServer
 // for forward compatibility.
 type BackendServiceServer interface {
+	// サンプル用API
 	Hello(context.Context, *HelloRequest) (*HelloResponse, error)
+	// ユーザ一覧照会API
+	UserList(context.Context, *UserListRequest) (*UserListResponse, error)
 	mustEmbedUnimplementedBackendServiceServer()
 }
 
@@ -64,6 +81,9 @@ type UnimplementedBackendServiceServer struct{}
 
 func (UnimplementedBackendServiceServer) Hello(context.Context, *HelloRequest) (*HelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
+}
+func (UnimplementedBackendServiceServer) UserList(context.Context, *UserListRequest) (*UserListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserList not implemented")
 }
 func (UnimplementedBackendServiceServer) mustEmbedUnimplementedBackendServiceServer() {}
 func (UnimplementedBackendServiceServer) testEmbeddedByValue()                        {}
@@ -104,6 +124,24 @@ func _BackendService_Hello_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BackendService_UserList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BackendServiceServer).UserList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BackendService_UserList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BackendServiceServer).UserList(ctx, req.(*UserListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BackendService_ServiceDesc is the grpc.ServiceDesc for BackendService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +152,10 @@ var BackendService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Hello",
 			Handler:    _BackendService_Hello_Handler,
+		},
+		{
+			MethodName: "UserList",
+			Handler:    _BackendService_UserList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
