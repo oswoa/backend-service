@@ -1,0 +1,13 @@
+services:
+    backend:
+        build: .
+        container_name: backend
+        environment:
+            - PORT=50001
+        networks:
+            - user-management
+        ports:
+            - 50001:50001
+networks:
+    user-management:
+        name: user-management
