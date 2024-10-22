@@ -10,7 +10,7 @@ import (
 	"github.com/oswoa/backend-service/internal_error/business_error"
 )
 
-func (i IRouter) Hello(ctx context.Context, request *proto.HelloRequest) (*proto.HelloResponse, error) {
+func (i Router) Hello(ctx context.Context, request *proto.HelloRequest) (*proto.HelloResponse, error) {
 
 	// API名の設定
 	ctx = context.WithValue(ctx, config.API_NAME, config.API_HELLO)
