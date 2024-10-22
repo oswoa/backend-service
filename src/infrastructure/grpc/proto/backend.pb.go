@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.35.1
 // 	protoc        v5.28.2
-// source: src/backend.proto
+// source: backend.proto
 
 package backend_service
 
@@ -31,7 +31,7 @@ type HelloRequest struct {
 
 func (x *HelloRequest) Reset() {
 	*x = HelloRequest{}
-	mi := &file_src_backend_proto_msgTypes[0]
+	mi := &file_backend_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *HelloRequest) String() string {
 func (*HelloRequest) ProtoMessage() {}
 
 func (x *HelloRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_src_backend_proto_msgTypes[0]
+	mi := &file_backend_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *HelloRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HelloRequest.ProtoReflect.Descriptor instead.
 func (*HelloRequest) Descriptor() ([]byte, []int) {
-	return file_src_backend_proto_rawDescGZIP(), []int{0}
+	return file_backend_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *HelloRequest) GetKind() int32 {
@@ -77,7 +77,7 @@ type HelloResponse struct {
 
 func (x *HelloResponse) Reset() {
 	*x = HelloResponse{}
-	mi := &file_src_backend_proto_msgTypes[1]
+	mi := &file_backend_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -89,7 +89,7 @@ func (x *HelloResponse) String() string {
 func (*HelloResponse) ProtoMessage() {}
 
 func (x *HelloResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_src_backend_proto_msgTypes[1]
+	mi := &file_backend_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -102,7 +102,7 @@ func (x *HelloResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HelloResponse.ProtoReflect.Descriptor instead.
 func (*HelloResponse) Descriptor() ([]byte, []int) {
-	return file_src_backend_proto_rawDescGZIP(), []int{1}
+	return file_backend_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *HelloResponse) GetMsg() string {
@@ -124,7 +124,7 @@ type UserListRequest struct {
 
 func (x *UserListRequest) Reset() {
 	*x = UserListRequest{}
-	mi := &file_src_backend_proto_msgTypes[2]
+	mi := &file_backend_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -136,7 +136,7 @@ func (x *UserListRequest) String() string {
 func (*UserListRequest) ProtoMessage() {}
 
 func (x *UserListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_src_backend_proto_msgTypes[2]
+	mi := &file_backend_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -149,7 +149,7 @@ func (x *UserListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserListRequest.ProtoReflect.Descriptor instead.
 func (*UserListRequest) Descriptor() ([]byte, []int) {
-	return file_src_backend_proto_rawDescGZIP(), []int{2}
+	return file_backend_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *UserListRequest) GetEmail() string {
@@ -172,13 +172,12 @@ type UserListResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UserId string `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
-	Email  string `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	UserDetail []*UserDetail `protobuf:"bytes,1,rep,name=userDetail,proto3" json:"userDetail,omitempty"`
 }
 
 func (x *UserListResponse) Reset() {
 	*x = UserListResponse{}
-	mi := &file_src_backend_proto_msgTypes[3]
+	mi := &file_backend_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -190,7 +189,7 @@ func (x *UserListResponse) String() string {
 func (*UserListResponse) ProtoMessage() {}
 
 func (x *UserListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_src_backend_proto_msgTypes[3]
+	mi := &file_backend_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -203,40 +202,34 @@ func (x *UserListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserListResponse.ProtoReflect.Descriptor instead.
 func (*UserListResponse) Descriptor() ([]byte, []int) {
-	return file_src_backend_proto_rawDescGZIP(), []int{3}
+	return file_backend_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *UserListResponse) GetUserId() string {
+func (x *UserListResponse) GetUserDetail() []*UserDetail {
 	if x != nil {
-		return x.UserId
+		return x.UserDetail
 	}
-	return ""
+	return nil
 }
 
-func (x *UserListResponse) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
-}
+var File_backend_proto protoreflect.FileDescriptor
 
-var File_src_backend_proto protoreflect.FileDescriptor
-
-var file_src_backend_proto_rawDesc = []byte{
-	0x0a, 0x11, 0x73, 0x72, 0x63, 0x2f, 0x62, 0x61, 0x63, 0x6b, 0x65, 0x6e, 0x64, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x22, 0x22, 0x0a, 0x0c, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6b, 0x69, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x04, 0x6b, 0x69, 0x6e, 0x64, 0x22, 0x21, 0x0a, 0x0d, 0x48, 0x65, 0x6c, 0x6c, 0x6f,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x22, 0x45, 0x0a, 0x0f, 0x55, 0x73,
-	0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a,
-	0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d,
-	0x61, 0x69, 0x6c, 0x12, 0x1c, 0x0a, 0x09, 0x69, 0x73, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x64,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x69, 0x73, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
-	0x64, 0x22, 0x40, 0x0a, 0x10, 0x55, 0x73, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x14, 0x0a,
-	0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d,
+var file_backend_proto_rawDesc = []byte{
+	0x0a, 0x0d, 0x62, 0x61, 0x63, 0x6b, 0x65, 0x6e, 0x64, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a,
+	0x13, 0x62, 0x61, 0x63, 0x6b, 0x65, 0x6e, 0x64, 0x5f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x22, 0x22, 0x0a, 0x0c, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6b, 0x69, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x6b, 0x69, 0x6e, 0x64, 0x22, 0x21, 0x0a, 0x0d, 0x48, 0x65, 0x6c, 0x6c,
+	0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x22, 0x45, 0x0a, 0x0f, 0x55,
+	0x73, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14,
+	0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65,
+	0x6d, 0x61, 0x69, 0x6c, 0x12, 0x1c, 0x0a, 0x09, 0x69, 0x73, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x69, 0x73, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x64, 0x22, 0x3f, 0x0a, 0x10, 0x55, 0x73, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2b, 0x0a, 0x0a, 0x75, 0x73, 0x65, 0x72, 0x44, 0x65,
+	0x74, 0x61, 0x69, 0x6c, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0b, 0x2e, 0x55, 0x73, 0x65,
+	0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x0a, 0x75, 0x73, 0x65, 0x72, 0x44, 0x65, 0x74,
 	0x61, 0x69, 0x6c, 0x32, 0x69, 0x0a, 0x0e, 0x42, 0x61, 0x63, 0x6b, 0x65, 0x6e, 0x64, 0x53, 0x65,
 	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x26, 0x0a, 0x05, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x12, 0x0d,
 	0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0e, 0x2e,
@@ -250,57 +243,60 @@ var file_src_backend_proto_rawDesc = []byte{
 }
 
 var (
-	file_src_backend_proto_rawDescOnce sync.Once
-	file_src_backend_proto_rawDescData = file_src_backend_proto_rawDesc
+	file_backend_proto_rawDescOnce sync.Once
+	file_backend_proto_rawDescData = file_backend_proto_rawDesc
 )
 
-func file_src_backend_proto_rawDescGZIP() []byte {
-	file_src_backend_proto_rawDescOnce.Do(func() {
-		file_src_backend_proto_rawDescData = protoimpl.X.CompressGZIP(file_src_backend_proto_rawDescData)
+func file_backend_proto_rawDescGZIP() []byte {
+	file_backend_proto_rawDescOnce.Do(func() {
+		file_backend_proto_rawDescData = protoimpl.X.CompressGZIP(file_backend_proto_rawDescData)
 	})
-	return file_src_backend_proto_rawDescData
+	return file_backend_proto_rawDescData
 }
 
-var file_src_backend_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_src_backend_proto_goTypes = []any{
+var file_backend_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_backend_proto_goTypes = []any{
 	(*HelloRequest)(nil),     // 0: HelloRequest
 	(*HelloResponse)(nil),    // 1: HelloResponse
 	(*UserListRequest)(nil),  // 2: UserListRequest
 	(*UserListResponse)(nil), // 3: UserListResponse
+	(*UserDetail)(nil),       // 4: UserDetail
 }
-var file_src_backend_proto_depIdxs = []int32{
-	0, // 0: BackendService.Hello:input_type -> HelloRequest
-	2, // 1: BackendService.UserList:input_type -> UserListRequest
-	1, // 2: BackendService.Hello:output_type -> HelloResponse
-	3, // 3: BackendService.UserList:output_type -> UserListResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+var file_backend_proto_depIdxs = []int32{
+	4, // 0: UserListResponse.userDetail:type_name -> UserDetail
+	0, // 1: BackendService.Hello:input_type -> HelloRequest
+	2, // 2: BackendService.UserList:input_type -> UserListRequest
+	1, // 3: BackendService.Hello:output_type -> HelloResponse
+	3, // 4: BackendService.UserList:output_type -> UserListResponse
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_src_backend_proto_init() }
-func file_src_backend_proto_init() {
-	if File_src_backend_proto != nil {
+func init() { file_backend_proto_init() }
+func file_backend_proto_init() {
+	if File_backend_proto != nil {
 		return
 	}
+	file_backend_model_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_src_backend_proto_rawDesc,
+			RawDescriptor: file_backend_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_src_backend_proto_goTypes,
-		DependencyIndexes: file_src_backend_proto_depIdxs,
-		MessageInfos:      file_src_backend_proto_msgTypes,
+		GoTypes:           file_backend_proto_goTypes,
+		DependencyIndexes: file_backend_proto_depIdxs,
+		MessageInfos:      file_backend_proto_msgTypes,
 	}.Build()
-	File_src_backend_proto = out.File
-	file_src_backend_proto_rawDesc = nil
-	file_src_backend_proto_goTypes = nil
-	file_src_backend_proto_depIdxs = nil
+	File_backend_proto = out.File
+	file_backend_proto_rawDesc = nil
+	file_backend_proto_goTypes = nil
+	file_backend_proto_depIdxs = nil
 }
