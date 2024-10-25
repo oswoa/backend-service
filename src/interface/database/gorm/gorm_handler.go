@@ -20,6 +20,11 @@ type Connection struct {
 
 // DBコネクションを作成
 func NewConnection() *Connection {
+	host, err := util.GetEnv(config.DB_HOST)
+	if err != nil {
+		panic(err)
+	}
+
 	database, err := util.GetEnv(config.DATABASE)
 	if err != nil {
 		panic(err)
@@ -36,13 +41,13 @@ func NewConnection() *Connection {
 	}
 
 	option := "charset=utf8mb4&parseTime=True&loc=Local"
-	dsn := fmt.Sprintf("%s:%s@tcp(localhost:3306)/%s?%s",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?%s",
 		user,
 		password,
+		host,
 		database,
 		option)
 
-	// TODO: コネクションは明示的に閉じる必要あるのか要確認
 	conn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("DBの接続に失敗しました")
