@@ -5,7 +5,9 @@ import (
 
 	"github.com/oswoa/backend-service/config"
 	proto "github.com/oswoa/backend-service/infrastructure/grpc/proto"
+	"github.com/oswoa/backend-service/infrastructure/router/validator"
 	"github.com/oswoa/backend-service/infrastructure/router/validator/model"
+	"github.com/oswoa/backend-service/internal_error/business_error"
 )
 
 func (i Router) UserList(ctx context.Context, request *proto.UserListRequest) (*proto.UserListResponse, error) {
@@ -17,12 +19,10 @@ func (i Router) UserList(ctx context.Context, request *proto.UserListRequest) (*
 		Email:     request.Email,
 		IsDeleted: request.IsDeleted,
 	}
-	/*
-		if err := validator.RequestValidate(reqModel); err != nil {
-			business_error.PrintError(ctx.Value(config.API_NAME), err)
-			return &proto.UserListResponse{}, nil
-		}
-	*/
+	if err := validator.RequestValidate(reqModel); err != nil {
+		business_error.PrintError(ctx.Value(config.API_NAME), err)
+		return &proto.UserListResponse{}, nil
+	}
 
 	// usecase呼び出し
 	userList := i.service.UserList(reqModel.Email, reqModel.IsDeleted)
