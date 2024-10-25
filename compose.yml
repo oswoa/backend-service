@@ -5,6 +5,7 @@ services:
             dockerfile: Dockerfile-backend
         container_name: backend
         environment:
+            - DB_HOST=db
             - PORT=50001
             - DATABASE=user_management
             - DB_USER=root
@@ -13,6 +14,9 @@ services:
             - user-management
         ports:
             - 50001:50001
+        depends_on:
+            db:
+                condition: service_healthy
     db:
         build:
             context: .
@@ -26,6 +30,11 @@ services:
             - ./db:/docker-entrypoint-initdb.d
         ports:
             - 3306:3306
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            interval: 5s
+            timeout: 5s
+            retries: 3
 networks:
     user-management:
         name: user-management
