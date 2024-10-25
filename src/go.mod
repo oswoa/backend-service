@@ -6,6 +6,8 @@ require (
 	github.com/go-playground/validator/v10 v10.22.1
 	google.golang.org/grpc v1.67.1
 	google.golang.org/protobuf v1.35.1
+	gorm.io/driver/mysql v1.5.7
+	gorm.io/gorm v1.25.12
 )
 
 require (
@@ -22,7 +24,4 @@ require (
 	golang.org/x/sys v0.24.0 // indirect
 	golang.org/x/text v0.19.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240814211410-ddb44dafa142 // indirect
-	gorm.io/driver/mysql v1.5.7 // indirect
-	gorm.io/gorm v1.25.12 // indirect
-	gorm.io/plugin/dbresolver v1.5.3 // indirect
 )

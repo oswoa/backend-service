@@ -2,6 +2,7 @@ package config
 
 // 環境変数
 const (
+	DB_HOST     = "DB_HOST"
 	PORT        = "PORT"
 	DATABASE    = "DATABASE"
 	DB_USER     = "DB_USER"
