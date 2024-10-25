@@ -1,1 +1,2 @@
 FROM mysql:8
+COPY ./db/db.cnf /etc/mysql/conf.d
