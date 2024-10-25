@@ -13,8 +13,8 @@ import (
 )
 
 type IConnection interface {
-	QueryOne(result interface{}, where string, binds []interface{})
-	Query(result interface{}, whereQuery string, binds []interface{})
+	QueryOne(result interface{}, where string, binds []interface{}, orderBy string)
+	Query(result interface{}, whereQuery string, binds []interface{}, orderBy string)
 }
 
 type Connection struct {
@@ -85,11 +85,11 @@ func NewConnection() *Connection {
 }
 
 // 取得した最初の1件を取得
-func (c Connection) QueryOne(result interface{}, where string, binds []interface{}) {
-	c.conn.Where(where, binds...).First(&result)
+func (c Connection) QueryOne(result interface{}, where string, binds []interface{}, orderBy string) {
+	c.conn.Where(where, binds...).Order(orderBy).First(&result)
 }
 
 // WHERE検索をする
-func (c Connection) Query(result interface{}, whereQuery string, binds []interface{}) {
-	c.conn.Where(whereQuery, binds...).Find(result)
+func (c Connection) Query(result interface{}, whereQuery string, binds []interface{}, orderBy string) {
+	c.conn.Where(whereQuery, binds...).Order(orderBy).Find(result)
 }
