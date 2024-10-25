@@ -10,7 +10,7 @@ services:
             - DATABASE=user_management
             - DB_USER=root
             - DB_PASSWORD=root
-            - RETRY_COUNT=5
+            - DB_RETRY_COUNT=5
             - TIMEOUT=5000
         networks:
             - user-management
