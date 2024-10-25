@@ -2,6 +2,9 @@ package gorm_handler
 
 import (
 	"fmt"
+	"log"
+	"strconv"
+	"time"
 
 	"github.com/oswoa/backend-service/config"
 	"github.com/oswoa/backend-service/util"
@@ -20,6 +23,8 @@ type Connection struct {
 
 // DBコネクションを作成
 func NewConnection() *Connection {
+
+	// 環境変数の取得
 	host, err := util.GetEnv(config.DB_HOST)
 	if err != nil {
 		panic(err)
@@ -40,6 +45,18 @@ func NewConnection() *Connection {
 		panic(err)
 	}
 
+	envDbRetryCount, err := util.GetEnv(config.DB_RETRY_COUNT)
+	if err != nil {
+		panic(err)
+	}
+	dbRetryCount, _ := strconv.Atoi(envDbRetryCount)
+
+	envTimeout, err := util.GetEnv(config.TIMEOUT)
+	if err != nil {
+		panic(err)
+	}
+	timeout, _ := strconv.Atoi(envTimeout)
+
 	option := "charset=utf8mb4&parseTime=True&loc=Local"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?%s",
 		user,
@@ -48,13 +65,21 @@ func NewConnection() *Connection {
 		database,
 		option)
 
-	conn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic("DBの接続に失敗しました")
-	}
-
+	// DB接続のリトライ処理
 	connection := new(Connection)
-	connection.conn = conn
+	for i := 0; i < dbRetryCount; i++ {
+		conn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+		if i == dbRetryCount-1 {
+			panic("DB接続のリトライ上限に達しました")
+		} else if err != nil {
+			log.Printf("[リトライ %d回目]DBの接続に失敗しました", i+1)
+			time.Sleep(time.Duration(timeout) * time.Duration(time.Millisecond))
+		} else {
+			connection.conn = conn
+			break
+		}
+	}
 
 	return connection
 }
