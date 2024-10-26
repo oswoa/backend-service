@@ -10,8 +10,8 @@ import (
 
 // エラーメッセージ定義
 const (
-	ERR_MSG_VALIDATE_REQUEST  = "リクエスト形式が不正です。[ErrCode: %s][parameter: %s][エラー詳細: %s]"
-	ERR_MSG_VALIDATE_RESPONSE = "レスポンス形式が不正です。[ErrCode: %s][parameter: %s][エラー詳細: %s]"
+	ERR_MSG_VALIDATE_REQUEST  = "リクエスト形式が不正です。[ErrCode: %s][param: %s][エラー詳細: %s]"
+	ERR_MSG_VALIDATE_RESPONSE = "レスポンス形式が不正です。[ErrCode: %s][param: %s][エラー詳細: %s]"
 )
 
 // エラーコード定義
