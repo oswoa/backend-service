@@ -25,33 +25,33 @@ type Connection struct {
 func NewConnection() *Connection {
 
 	// 環境変数の取得
-	host, err := util.GetEnv(config.DB_HOST)
+	host, err := util.GetEnv(config.ENV_DB_HOST)
 	if err != nil {
 		panic(err)
 	}
 
-	database, err := util.GetEnv(config.DATABASE)
+	database, err := util.GetEnv(config.ENV_DATABASE)
 	if err != nil {
 		panic(err)
 	}
 
-	user, err := util.GetEnv(config.DB_USER)
+	user, err := util.GetEnv(config.ENV_DB_USER)
 	if err != nil {
 		panic(err)
 	}
 
-	password, err := util.GetEnv(config.DB_PASSWORD)
+	password, err := util.GetEnv(config.ENV_DB_PASSWORD)
 	if err != nil {
 		panic(err)
 	}
 
-	envDbRetryCount, err := util.GetEnv(config.DB_RETRY_COUNT)
+	envDbRetryCount, err := util.GetEnv(config.ENV_DB_RETRY_COUNT)
 	if err != nil {
 		panic(err)
 	}
 	dbRetryCount, _ := strconv.Atoi(envDbRetryCount)
 
-	envTimeout, err := util.GetEnv(config.TIMEOUT)
+	envTimeout, err := util.GetEnv(config.ENV_TIMEOUT)
 	if err != nil {
 		panic(err)
 	}
