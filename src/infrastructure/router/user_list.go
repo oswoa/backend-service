@@ -20,7 +20,12 @@ func (i Router) UserList(ctx context.Context, request *proto.UserListRequest) (*
 		Email:     request.Email,
 		IsDeleted: request.IsDeleted,
 	}
-	if err := validator.Validate(reqModel); err != nil {
+	if validateErr := validator.Validate(reqModel); validateErr != nil {
+		err := business_error.RequestValidateError{
+			ErrCode:   business_error.ERR_CODE_VALIDATE_REQUEST,
+			ErrTag:    validateErr.ErrTag,
+			FieldName: validateErr.FieldName,
+		}
 		business_error.PrintError(ctx, err)
 		return &proto.UserListResponse{}, nil
 	}
@@ -35,7 +40,12 @@ func (i Router) UserList(ctx context.Context, request *proto.UserListRequest) (*
 			Email:       v.Email,
 			IsAvailable: v.IsAvailable,
 		}
-		if err := validator.Validate(resModel); err != nil {
+		if validateErr := validator.Validate(resModel); validateErr != nil {
+			err := business_error.ResponseValidateError{
+				ErrCode:   business_error.ERR_CODE_VALIDATE_RESPONSE,
+				ErrTag:    validateErr.ErrTag,
+				FieldName: validateErr.FieldName,
+			}
 			business_error.PrintError(ctx, err)
 			return &proto.UserListResponse{}, nil
 		}
@@ -46,7 +56,7 @@ func (i Router) UserList(ctx context.Context, request *proto.UserListRequest) (*
 		val := &proto.UserDetail{
 			UserId:      v.UserId,
 			Email:       v.Email,
-			IsAvailable: v.ConvertIsAvailable(),
+			IsAvailable: v.IsAvailable,
 		}
 		response = append(response, val)
 	}
