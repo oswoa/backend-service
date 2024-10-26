@@ -18,6 +18,5 @@ const (
 
 // API名
 const (
-	API_HELLO     = "サンプルAPI"
 	API_USER_LIST = "ユーザ一覧照会"
 )
