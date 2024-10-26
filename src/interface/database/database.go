@@ -7,7 +7,7 @@ import (
 
 // database層の実装
 type IDatabase interface {
-	UserList(whereQuery string, binds []interface{}, orderBy string) []model.Users
+	UserList(email string, isDeleted bool) []model.Users
 }
 
 // database層のinterfaceを実装する構造体

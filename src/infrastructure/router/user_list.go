@@ -20,7 +20,7 @@ func (i Router) UserList(ctx context.Context, request *proto.UserListRequest) (*
 		IsDeleted: request.IsDeleted,
 	}
 	if err := validator.RequestValidate(reqModel); err != nil {
-		business_error.PrintError(ctx.Value(config.API_NAME), err)
+		business_error.PrintError(ctx, err)
 		return &proto.UserListResponse{}, nil
 	}
 

@@ -7,6 +7,7 @@ import (
 
 // service層の実装
 type IService interface {
+	// ユーザ一覧照会
 	UserList(email string, isDeleted bool) []model.UserDetail
 }
 
