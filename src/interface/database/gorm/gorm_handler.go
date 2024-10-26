@@ -70,7 +70,7 @@ func NewConnection() *Connection {
 	for i := 0; i < dbRetryCount; i++ {
 		conn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
-		if i == dbRetryCount-1 {
+		if i-1 == dbRetryCount {
 			panic("DB接続のリトライ上限に達しました")
 		} else if err != nil {
 			log.Printf("[リトライ %d回目]DBの接続に失敗しました", i+1)
