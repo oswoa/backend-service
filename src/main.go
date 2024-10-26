@@ -16,7 +16,7 @@ import (
 
 func main() {
 
-	port, err := util.GetEnv(config.PORT)
+	port, err := util.GetEnv(config.ENV_PORT)
 	if err != nil {
 		panic(err)
 	}

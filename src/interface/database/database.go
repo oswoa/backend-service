@@ -7,6 +7,10 @@ import (
 
 // database層の実装
 type IDatabase interface {
+	// ユーザ権限取得
+	GetUserAuthority(userId string) model.Authorities
+
+	// ユーザ一覧照会
 	UserList(email string, isDeleted bool) []model.Users
 }
 

@@ -6,7 +6,8 @@ type ValidatorUserListRequest struct {
 }
 
 type ValidatorUserListResponse struct {
-	UserId      string `validate:"required,alphanum"`
-	Email       string `validate:"required,email"`
-	IsAvailable bool   `validate:"required,boolean"`
+	UserId string `validate:"required,alphanum"`
+	Email  string `validate:"required,email"`
+	// TODO: gRPCの仕様でゼロ値の項目は返却されないため、ゼロ値に関わらず返却するようにする
+	IsAvailable bool `validate:"required,boolean"`
 }
