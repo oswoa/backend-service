@@ -13,8 +13,9 @@ import (
 )
 
 type IConnection interface {
-	QueryOne(result interface{}, where string, binds []interface{}, orderBy string)
-	Query(result interface{}, whereQuery string, binds []interface{}, orderBy string)
+	QueryOne(result interface{}, where interface{}, binds []interface{}, orderBy interface{}) *gorm.DB
+	Query(result interface{}, whereQuery interface{}, binds []interface{}, orderBy interface{}) *gorm.DB
+	JoinQuery(result interface{}, joinWhere string, joinBinds []interface{}, whereQuery interface{}, whereBinds []interface{}, orderBy interface{}) *gorm.DB
 }
 
 type Connection struct {
@@ -85,11 +86,16 @@ func NewConnection() *Connection {
 }
 
 // 取得した最初の1件を取得
-func (c Connection) QueryOne(result interface{}, where string, binds []interface{}, orderBy string) {
-	c.conn.Where(where, binds...).Order(orderBy).First(&result)
+func (c Connection) QueryOne(result interface{}, where interface{}, binds []interface{}, orderBy interface{}) *gorm.DB {
+	return c.conn.Where(where, binds...).Order(orderBy).First(&result)
 }
 
-// WHERE検索をする
-func (c Connection) Query(result interface{}, whereQuery string, binds []interface{}, orderBy string) {
-	c.conn.Where(whereQuery, binds...).Order(orderBy).Find(result)
+// WHERE検索
+func (c Connection) Query(result interface{}, whereQuery interface{}, binds []interface{}, orderBy interface{}) *gorm.DB {
+	return c.conn.Where(whereQuery, binds...).Order(orderBy).Find(result)
+}
+
+// 結合検索
+func (c Connection) JoinQuery(result interface{}, joinWhere string, joinBinds []interface{}, whereQuery interface{}, whereBinds []interface{}, orderBy interface{}) *gorm.DB {
+	return c.conn.Joins(joinWhere, joinBinds...).Where(whereQuery, whereBinds...).Order(orderBy).Find(result)
 }

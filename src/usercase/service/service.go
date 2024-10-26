@@ -7,6 +7,9 @@ import (
 
 // service層の実装
 type IService interface {
+	// ユーザ権限取得
+	GetUserAuthority(userId string) model.UserAuthority
+
 	// ユーザ一覧照会
 	UserList(email string, isDeleted bool) []model.UserDetail
 }
