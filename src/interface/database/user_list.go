@@ -6,6 +6,7 @@ import (
 	"github.com/oswoa/backend-service/interface/database/model"
 )
 
+// ユーザ一覧照会
 func (d Database) UserList(email string, isDeleted bool) []model.Users {
 
 	// queryの生成
