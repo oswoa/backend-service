@@ -10,22 +10,36 @@ import (
 	"github.com/oswoa/backend-service/internal_error/business_error"
 )
 
+// ユーザ一覧照会
 func (i Router) UserList(ctx context.Context, request *proto.UserListRequest) (*proto.UserListResponse, error) {
 	// API名の設定
 	ctx = context.WithValue(ctx, config.API_NAME, config.API_USER_LIST)
 
 	// リクエストのバリデーション
-	reqModel := model.ValidatorUserList{
+	reqModel := model.ValidatorUserListRequest{
 		Email:     request.Email,
 		IsDeleted: request.IsDeleted,
 	}
-	if err := validator.RequestValidate(reqModel); err != nil {
+	if err := validator.Validate(reqModel); err != nil {
 		business_error.PrintError(ctx, err)
 		return &proto.UserListResponse{}, nil
 	}
 
 	// usecase呼び出し
 	userList := i.service.UserList(reqModel.Email, reqModel.IsDeleted)
+
+	// レスポンスのバリデーション
+	for _, v := range userList {
+		resModel := model.ValidatorUserListResponse{
+			UserId:      v.UserId,
+			Email:       v.Email,
+			IsAvailable: v.IsAvailable,
+		}
+		if err := validator.Validate(resModel); err != nil {
+			business_error.PrintError(ctx, err)
+			return &proto.UserListResponse{}, nil
+		}
+	}
 
 	response := make([]*proto.UserDetail, 0)
 	for _, v := range userList {

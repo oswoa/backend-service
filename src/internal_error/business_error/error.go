@@ -10,44 +10,17 @@ import (
 
 // エラーメッセージ定義
 const (
-	VALIDATE_ERROR_MSG = "不正なパラメータが送信されました。"
+	ERR_MSG_VALIDATE_REQUEST  = "リクエスト形式が不正です。[ErrCode: %s][parameter: %s][エラー詳細: %s]"
+	ERR_MSG_VALIDATE_RESPONSE = "レスポンス形式が不正です。[ErrCode: %s][parameter: %s][エラー詳細: %s]"
 )
 
 // エラーコード定義
 const (
-	VALIDATE_ERROR_CODE = "EB0001"
+	ERR_CODE_VALIDATE_REQUEST  = "EB0001"
+	ERR_CODE_VALIDATE_RESPONSE = "EB0002"
 )
 
 // エラーオブジェクト定義
-type ValidateError struct {
-	FieldName string
-	ErrCode   string
-	ErrMsg    string
-	ErrTag    string
-}
-
-func (e ValidateError) Error() string {
-	return fmt.Sprintf("%s %s[parameter: %s][エラー詳細: %s]\n",
-		e.ErrCode,
-		e.ErrMsg,
-		e.FieldName,
-		e.GetErrDetail())
-}
-
-func (e ValidateError) GetErrDetail() string {
-
-	var errDetail string
-
-	switch e.ErrTag {
-	case "alphanum":
-		errDetail = "半角英数"
-	default:
-		panic(fmt.Sprintf("[%s]: 不明な文字種", e.ErrTag))
-	}
-
-	return errDetail
-}
-
 func PrintError(ctx context.Context, err error) {
 	apiName, ok := ctx.Value(config.API_NAME).(string)
 	if !ok {
