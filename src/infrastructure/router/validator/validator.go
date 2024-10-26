@@ -14,6 +14,7 @@ func RequestValidate(req interface{}) error {
 				FieldName: err.Field(),
 				ErrCode:   business_error.VALIDATE_ERROR_CODE,
 				ErrMsg:    business_error.VALIDATE_ERROR_MSG,
+				ErrTag:    err.Tag(),
 			}
 		}
 	}

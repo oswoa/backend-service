@@ -1,6 +1,12 @@
 package business_error
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"log"
+
+	"github.com/oswoa/backend-service/config"
+)
 
 // エラーメッセージ定義
 const (
@@ -12,23 +18,41 @@ const (
 	VALIDATE_ERROR_CODE = "EB0001"
 )
 
+// エラーオブジェクト定義
 type ValidateError struct {
 	FieldName string
 	ErrCode   string
 	ErrMsg    string
+	ErrTag    string
 }
 
 func (e ValidateError) Error() string {
-	return fmt.Sprintf("%s %s [parameter: %s]\n",
+	return fmt.Sprintf("%s %s[parameter: %s][エラー詳細: %s]\n",
 		e.ErrCode,
 		e.ErrMsg,
-		e.FieldName)
+		e.FieldName,
+		e.GetErrDetail())
 }
 
-func PrintError(apiName interface{}, err error) {
-	val, ok := apiName.(string)
+func (e ValidateError) GetErrDetail() string {
+
+	var errDetail string
+
+	switch e.ErrTag {
+	case "alphanum":
+		errDetail = "半角英数"
+	default:
+		panic(fmt.Sprintf("[%s]: 不明な文字種", e.ErrTag))
+	}
+
+	return errDetail
+}
+
+func PrintError(ctx context.Context, err error) {
+	apiName, ok := ctx.Value(config.API_NAME).(string)
 	if !ok {
 		fmt.Println("不明なエラーです")
+		return
 	}
-	fmt.Printf("[%s]: %s", val, err.Error())
+	log.Printf("[%s]: %s", apiName, err.Error())
 }
